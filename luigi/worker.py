@@ -65,13 +65,17 @@ try:
     import simplejson as json
 except ImportError:
     import json
+try:
+    from prwlock import RWLock
+    rw_lock = RWLock()
+except ImportError:
+    rw_lock=None
 
 logger = logging.getLogger('luigi-interface')
 
 # Prevent fork() from being called during a C-level getaddrinfo() which uses a process-global mutex,
 # that may not be unlocked in child process, resulting in the process being locked indefinitely.
 fork_lock = threading.Lock()
-
 # Why we assert on _WAIT_INTERVAL_EPS:
 # multiprocessing.Queue.get() is undefined for timeout=0 it seems:
 # https://docs.python.org/3.4/library/multiprocessing.html#multiprocessing.Queue.get.
@@ -97,9 +101,11 @@ class TaskProcess(multiprocessing.Process):
     Mainly for convenience since this is run in a separate process. """
 
     def __init__(self, task, worker_id, result_queue, tracking_url_callback,
-                 status_message_callback, random_seed=False, worker_timeout=0):
+                 status_message_callback, random_seed=False, worker_timeout=0, rw_lock=None):
         super(TaskProcess, self).__init__()
         self.task = task
+        if rw_lock is not None:
+            self.task.rw_lock = rw_lock
         self.worker_id = worker_id
         self.result_queue = result_queue
         self.tracking_url_callback = tracking_url_callback
@@ -755,7 +761,8 @@ class Worker(object):
         return TaskProcess(
             task, self._id, self._task_result_queue, update_tracking_url, update_status_message,
             random_seed=bool(self.worker_processes > 1),
-            worker_timeout=self._config.timeout
+            worker_timeout=self._config.timeout,
+            rw_lock = rw_lock
         )
 
     def _purge_children(self):
