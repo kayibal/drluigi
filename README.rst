@@ -1,5 +1,5 @@
-.. figure:: https://raw.githubusercontent.com/spotify/luigi/master/doc/luigi.png
-   :alt: Luigi Logo
+.. figure:: http://www.mariowiki.com/images/thumb/6/69/Dr._Luigi_Artwork_-_Dr._Luigi.png/324px-Dr._Luigi_Artwork_-_Dr._Luigi.png
+   :alt: Dr Luigi
    :align: center
 
 Dr Luigi is a Python (2.7, 3.3, 3.4, 3.5) package forked from spotify/luigi that helps you build complex pipelines of batch
