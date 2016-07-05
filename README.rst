@@ -1,25 +1,12 @@
-.. figure:: http://www.mariowiki.com/images/thumb/6/69/Dr._Luigi_Artwork_-_Dr._Luigi.png/324px-Dr._Luigi_Artwork_-_Dr._Luigi.png
-   :alt: Dr Luigi
+.. figure:: https://raw.githubusercontent.com/spotify/luigi/master/doc/luigi.png
+   :alt: Luigi Logo
    :align: center
 
-.. image:: https://img.shields.io/travis/spotify/luigi/master.svg?style=flat
-    :target: https://travis-ci.org/spotify/luigi
- 
-.. image:: https://img.shields.io/codecov/c/github/spotify/luigi/master.svg?style=flat
-    :target: https://codecov.io/gh/spotify/luigi?branch=master
- 
-.. image:: https://landscape.io/github/spotify/luigi/master/landscape.svg?style=flat
-   :target: https://landscape.io/github/spotify/luigi/master
- 
-.. image:: https://img.shields.io/pypi/dm/luigi.svg?style=flat
-   :target: https://pypi.python.org/pypi/luigi
- 
-.. image:: https://img.shields.io/pypi/l/luigi.svg?style=flat
-   :target: https://pypi.python.org/pypi/luigi
-
-Luigi is a Python (2.7, 3.3, 3.4, 3.5) package that helps you build complex pipelines of batch
+Dr Luigi is a Python (2.7, 3.3, 3.4, 3.5) package forked from spotify/luigi that helps you build complex pipelines of batch
 jobs. It handles dependency resolution, workflow management, visualization,
-handling failures, command line integration, and much more.
+handling failures, command line integration, and much more. It furthermore focuses
+on handling complex data pipelines on strong concurrent machines by providing tools
+for easy integration with Hdf5 data format and pandas.
 
 Getting Started
 ---------------
