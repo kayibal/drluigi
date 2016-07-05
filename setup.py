@@ -48,12 +48,12 @@ if os.environ.get('READTHEDOCS', None) == 'True':
     install_requires.remove('python-daemon<3.0')
 
 setup(
-    name='luigi',
+    name='drluigi',
     version='2.1.1',
-    description='Workflow mgmgt + task scheduling + dependency resolution',
+    description='Fork of spotify luigi. Extra packages for using pandas and HDF5 for scientific pipelines',
     long_description=long_description,
-    author='Erik Bernhardsson',
-    url='https://github.com/spotify/luigi',
+    author='Alan Höng',
+    url='https://github.com/kayibal/drluigi',
     license='Apache License 2.0',
     packages=[
         'luigi',
