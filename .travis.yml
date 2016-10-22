@@ -87,3 +87,4 @@ branches:
   only:
     - master
     - travisbuild
+    - update_hdf5
