@@ -11,6 +11,11 @@ LOGGER = logging.getLogger("luigi-interface")
 try:
     import pandas as pd
 except ImportError:
+
+    class Object:
+        HDFStore = object
+
+    pd = Object()
     LOGGER.warning("Loading hdf5 module without the python packages pandas. \
         This will crash at runtime if pandas functionality is used.")
 try:
@@ -19,11 +24,6 @@ try:
 except ImportError:
     LOGGER.warning("Loading hdf5 module without the python packages tables. \
             This will crash at runtime if tables functionality is used.")
-
-    class Object:
-        HDFStore = object
-
-    pd = Object()
 
 if sys.version_info < (3, 3):
     FileExistsError = OSError
@@ -180,7 +180,8 @@ class Hdf5FileSystem(luigi.target.FileSystem):
 
 
 class Hdf5Table(object):
-    def __init__(self, store, key, mode="r", append=True, index_cols=(), expected_rows=None, format="table", split=None,
+    def __init__(self, store, key, mode="r", append=True, index_cols=(),
+                 expected_rows=None, format="table", split=None,
                  complib="blosc", selector="index_table"):
         """
         Internal class to handle reads and writes to tables inside hdf5 stores.
@@ -259,7 +260,8 @@ class Hdf5Table(object):
         Saves the passed :class: pandas.DataFrame to the specified hdf5 storage. If table was openened in append mode
         and append was set to true multiple calls to write will append to the table.
         :param df:
-        :param sub_key: Useful to write a splitted table into the parent key. Note that all sub-tables have to be of the same number rows and will be indexed using the first written table
+        :param sub_key: Useful to write a splitted table into the parent key. Note that all sub-tables have to be of
+                        the same number rows and will be indexed using the first written table
         :return:
         """
         if df.empty:
@@ -302,7 +304,8 @@ class Hdf5Table(object):
     def close(self, exc=False):
         """
         Closes the file and creates an index if any index columns where specified
-        :param exc: parameter used to indicate that an exception happened before an IO operation finished if True no index will be created
+        :param exc: parameter used to indicate that an exception happened before an IO operation finished if
+                    True no index will be created
         :return:
         """
         if self.mode != "r" and not exc:
