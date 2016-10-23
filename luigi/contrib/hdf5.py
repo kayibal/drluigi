@@ -46,31 +46,22 @@ class Hdf5TableTarget(luigi.target.FileSystemTarget):
         """
 
         :param store: path to hdf5file will be created if not existent.
-
         :param key: key or node inside the storage to write to.
-
         :param index_cols: this columns will be fully indexed for faster searches.
                            Consider indexing often queried columns.
-
         :param append:  if True the created table will be appendable. Only usable if table is openened in append mode.
                         Multiple class to write will then append to the table. Default is True.
-
         :param expected_rows: for faster I/O a good estimate of the table size should be estimated.
-
         :param format:  either 'fixed' or 'table'
-
         :param complib: which compression library to use. Complevel is default set to 1 as results
                         do not differ to much using higher compression
-
         :param split:  A dictionary or an integer useful to split tables along their columns. If a dictionary is passed
                        it should describe a mapping between tables and columns. A table with the passed selector should
                        be present in the keys. All indexed columns should be mapped to the selector table. Passing an
                        integer will automatically create a valid split dictionary, where the number specifies the number
                        of desired tables.
-
         :param format: Only useful if split is not None. Specifies the selector table. This key must be present in the
                        split dictionary.
-
         :return: A target object
         """
         super(Hdf5TableTarget, self).__init__(key)
@@ -259,7 +250,8 @@ class Hdf5Table(object):
         """
         Saves the passed :class: pandas.DataFrame to the specified hdf5 storage. If table was openened in append mode
         and append was set to true multiple calls to write will append to the table.
-        :param df:
+
+        :param df: A Dataframe object to be saved into the store
         :param sub_key: Useful to write a splitted table into the parent key. Note that all sub-tables have to be of
                         the same number rows and will be indexed using the first written table
         :return:
@@ -279,6 +271,7 @@ class Hdf5Table(object):
     def read(self, keys=None, concat_axis=0, chunksize=None, autoclose=False, **kwargs):
         """
         Performs a read operation on a table in a hdf5 store
+
         :param keys: Allows for selecting multiple keys
         :param concat_axis: If multiple keys are selected along which axis to concatenate the results
         :param chunksize: If passed this method will return an iterator over row chunks
@@ -304,6 +297,7 @@ class Hdf5Table(object):
     def close(self, exc=False):
         """
         Closes the file and creates an index if any index columns where specified
+
         :param exc: parameter used to indicate that an exception happened before an IO operation finished if
                     True no index will be created
         :return:
@@ -466,6 +460,7 @@ class Hdf5Table(object):
         """
         This function creates a dictionary describing a mapping from columns to tables. The keys correspond to tables
         and the values are lists of column names which will be saved into the corresponding table.
+
         :param columns:
         :return:
         """
@@ -484,6 +479,7 @@ class Hdf5Table(object):
     def _check_key_integrity(self, keys, store):
         """
         Adds security to pandas append method which fails silently if appending to non existent keys
+
         :return:
         """
         for k in keys:
