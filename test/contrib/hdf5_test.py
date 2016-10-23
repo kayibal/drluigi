@@ -10,7 +10,7 @@ try:
     import pandas.util.testing as pdt
     import pandas as pd
 except ImportError:
-    unittest.SkipTest("unable to load pandas module")
+    raise unittest.SkipTest("unable to load pandas module")
 
 
 def cols_sorted(df):
@@ -18,7 +18,7 @@ def cols_sorted(df):
     return all([l[i] <= l[i + 1] for i in range(len(l) - 1)])
 
 
-@attr("hdf5")
+@attr('hdf5')
 class Hdf5TableTargetTest(unittest.TestCase):
     def setUp(self):
         self.existing = tempfile.mktemp()
