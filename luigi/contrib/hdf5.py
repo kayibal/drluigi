@@ -354,7 +354,7 @@ class Hdf5Table(object):
             if is_table:
                 return store.select(key=self.key, chunksize=chunksize, auto_close=1)
             else:
-                keys = self.filesystem.listdir(self.key)
+                keys = self.filesystem.listdir(self.key, store)
                 return store.select_as_multiple(keys, chunksize=chunksize, auto_close=1)
         except:
             store.close()
